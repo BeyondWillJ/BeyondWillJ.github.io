@@ -347,7 +347,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (scrollPercent < 95) {
       goUpElement.classList.add('show-percent')
-      goUpElement.querySelector('.scroll-percent').textContent = scrollPercent
+      goUpElement.querySelector('.scroll-percent').textContent = scrollPercent+'%'
+      // goUpElement.querySelector('.scroll-percent').textContent = scrollPercent
     } else {
       goUpElement.classList.remove('show-percent')
     }
