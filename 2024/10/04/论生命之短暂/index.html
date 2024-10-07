@@ -984,11 +984,11 @@ though they had lived the shortest of lives.</p>
   const loadMathjax = () => {
     if (!window.MathJax) {
       window.MathJax = {
-        loader: {load: ['[tex]/physics', '[tex]/ams', '[tex]/siunitx', '[tex]/gensymb']},
+        //- loader: {load: ['[tex]/physics', '[tex]/ams', '[tex]/siunitx', '[tex]/gensymb']},
         tex: {
           inlineMath: [['$', '$'], ['\\(', '\\)']],
           tags: 'none',
-          packages: {'[+]': ['physics', 'siunitx', 'AMS', 'gensymb']} // 导入physics包
+          //- packages: {'[+]': ['physics', 'siunitx', 'AMS', 'gensymb']} // 导入physics包
         },
         chtml: {
           scale: 1.1
