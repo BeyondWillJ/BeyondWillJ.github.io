@@ -196,6 +196,7 @@ degree可能是由于少导入了什么包……
   const loadMathjax = () => {
     if (!window.MathJax) {
       window.MathJax = {
+        loader: {load: ['[tex]/physics', '[tex]/ams', '[tex]/siunitx', '[tex]/gensymb']},
         tex: {
           inlineMath: [['$', '$'], ['\\(', '\\)']],
           tags: 'none',

@@ -189,6 +189,7 @@ f(2010)&amp;=2010a-2009b
   const loadMathjax = () => {
     if (!window.MathJax) {
       window.MathJax = {
+        loader: {load: ['[tex]/physics', '[tex]/ams', '[tex]/siunitx', '[tex]/gensymb']},
         tex: {
           inlineMath: [['$', '$'], ['\\(', '\\)']],
           tags: 'none',

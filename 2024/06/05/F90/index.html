@@ -808,6 +808,7 @@ class="math inline">\(n_2\)</span>​为</p>
   const loadMathjax = () => {
     if (!window.MathJax) {
       window.MathJax = {
+        loader: {load: ['[tex]/physics', '[tex]/ams', '[tex]/siunitx', '[tex]/gensymb']},
         tex: {
           inlineMath: [['$', '$'], ['\\(', '\\)']],
           tags: 'none',
