@@ -3,27 +3,6 @@
     font-display: swap;
     src: url('/font/STZHONGS.TTF') format("truetype");
 }
-/* body {
-    font-family: '华文中宋', 'Microsoft YaHei', sans-serif;
-} */
-/* 默认字体为微软雅黑 */
 body {
-    font-family: 'Microsoft YaHei', sans-serif;
-}
-
-/* 中文字体为华文中宋 */
-body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    background-image: linear-gradient(transparent 0%, transparent 0%);
-    -webkit-background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-    font-family: '华文中宋', sans-serif;
-    font-feature-settings: 'liga' 0, 'clig' 0, 'kern' 0, 'calt' 0, 'liga' 0, 'clig' 0, 'kern' 0, 'calt' 0;
+    font-family: '华文中宋', 'Microsoft YaHei', sans-serif;
 }
