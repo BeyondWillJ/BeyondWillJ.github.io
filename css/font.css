@@ -1,5 +1,5 @@
 @font-face{
     font-family: 'zhsong';
     font-display: swap;
-    src: url('/font/STZHONGS.TTF') format("zhsong"),
+    src: url('/font/STZHONGS.TTF') format("truetype");
 }
