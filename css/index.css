@@ -3831,7 +3831,7 @@ figure.highlight pre .javascript .function {
 #article-container img {
   text-align: center;
   display: block;
-  margin: 0 auto 15px;
+  margin: 0 auto 5px;
   max-width: 100%;
   -webkit-transition: filter 375ms ease-in 0.2s;
   -moz-transition: filter 375ms ease-in 0.2s;
@@ -3842,6 +3842,8 @@ figure.highlight pre .javascript .function {
 }
 #article-container figcaption {
   text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 4px;
 }
 #article-container p {
   margin: 0 0 16px;
