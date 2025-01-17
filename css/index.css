@@ -3842,8 +3842,8 @@ figure.highlight pre .javascript .function {
 }
 #article-container figcaption {
   text-align: center;
-  background-color: #ffd000;
-  border-radius: 4px;
+  color: #00008b;
+  font-weight: bold;
 }
 #article-container p {
   margin: 0 0 16px;
