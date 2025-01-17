@@ -5241,6 +5241,7 @@ blockquote.pullquote.right {
   margin: 0 3px;
   height: 1.1em;
   vertical-align: text-bottom;
+  text-align: center;
 }
 .hl-label {
   padding: 2px 4px;
