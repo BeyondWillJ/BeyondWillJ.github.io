@@ -4,5 +4,5 @@
     src: url('/font/STZHONGS.TTF') format("truetype");
 }
 body {
-    font-family: '华文中宋', sans-serif;
+    font-family: '华文中宋', 'Microsoft YaHei', sans-serif;
 }
