@@ -3829,6 +3829,7 @@ figure.highlight pre .javascript .function {
   text-decoration: underline;
 }
 #article-container img {
+  text-align: center;
   display: block;
   margin: 0 auto 20px;
   max-width: 100%;
