@@ -3,6 +3,15 @@
     font-display: swap;
     src: url('/font/STZHONGS.TTF') format("truetype");
 }
-body {
+/* body {
     font-family: '华文中宋', 'Microsoft YaHei', sans-serif;
+} */
+/* 默认字体为微软雅黑 */
+body {
+    font-family: 'Microsoft YaHei', sans-serif;
+}
+
+/* 中文字体为华文中宋 */
+[lang="zh"] {
+    font-family: '华文中宋', sans-serif;
 }
