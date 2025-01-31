@@ -87,11 +87,12 @@
 	background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
 	border: none;
 	border-radius: 6px; /* 适当减小圆角 */
-	font-size: 14px;    /* 文字稍小 */
+	/* font-size: 14px;    文字稍小 */
 	position: relative;
 	color: #ffffff;
 	font-weight: 600;
 	font-family: 'Segoe UI', system-ui, sans-serif; /* 更现代字体 */
+	font-size: 16px;
 	text-align: center;
 	cursor: pointer;
 	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* 平滑过渡动画 */
