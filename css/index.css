@@ -3844,6 +3844,7 @@ figure.highlight pre .javascript .function {
   text-align: center;
   font-family: 'Microsoft YaHei', sans-serif;
   color: #00008b;
+  font-weight: bold;
 }
 #article-container p {
   margin: 0 0 16px;
