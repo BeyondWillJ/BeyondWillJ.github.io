@@ -3842,6 +3842,7 @@ figure.highlight pre .javascript .function {
 }
 #article-container figcaption {
   text-align: center;
+  font-family: 'Microsoft YaHei', sans-serif;
   color: #00008b;
   font-weight: bold;
 }
