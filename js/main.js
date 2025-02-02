@@ -377,7 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (scrollPercent < 95) {
       goUpElement.classList.add('show-percent')
-      goUpElement.querySelector('.scroll-percent').innerHTML = scrollPercent+`<span class="small-percentage">%</span>`;
+      goUpElement.querySelector('.scroll-percent').innerHTML = `${scrollPercent}<span class="small-percentage" style="font-size: 0.666em; vertical-align: super; margin-left: 0.1em;">%</span>`;
     } else {
       goUpElement.classList.remove('show-percent')
     }
