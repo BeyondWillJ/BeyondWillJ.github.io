@@ -377,7 +377,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (scrollPercent < 95) {
       goUpElement.classList.add('show-percent')
-      goUpElement.querySelector('.scroll-percent').innerHTML = `${scrollPercent}<span class="small-percentage" style="font-size: 0.666em; vertical-align: super; margin-left: 0.1em;">%</span>`;
+      // 为百分比添加一个小型百分号
+      goUpElement.querySelector('.scroll-percent').innerHTML = `${scrollPercent}<span class="small-percentage" style="font-size: 0.75em; margin-left: 0.1em;">%</span>`;
     } else {
       goUpElement.classList.remove('show-percent')
     }
