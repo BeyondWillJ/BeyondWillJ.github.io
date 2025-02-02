@@ -2773,8 +2773,7 @@ figure.highlight pre .javascript .function {
 #aside-content #card-toc .toc-percentage {
   float: right;
   margin-top: -9px;
-  color: #a9a9a9;
-  font-style: italic;
+  color: #575757;
   font-size: 140%;
 }
 #aside-content #card-toc .toc-content {

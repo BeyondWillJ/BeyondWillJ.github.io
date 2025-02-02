@@ -553,7 +553,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tocScrollFn = btf.throttle(() => {
       const currentTop = window.scrollY || document.documentElement.scrollTop
       if (isToc && GLOBAL_CONFIG.percent.toc) {
-        $tocPercentage.textContent = btf.getScrollPercent(currentTop, $article)
+        $tocPercentage.textContent = btf.getScrollPercent(currentTop, $article)+'%'
       }
       findHeadPosition(currentTop)
     }, 100)
