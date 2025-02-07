@@ -1,0 +1,450 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>UNO游戏设计（V）：7-0规则 | 云间</title><meta name="author" content="BN,BeyondWillJ@163.com"><meta name="copyright" content="BN"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="UNO游戏在QQ群聊中实现，包括7-0规则的具体实现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UNO游戏设计（V）：7-0规则">
+<meta property="og:url" content="https://www.beyondwj.cc/UNO%E8%AE%BE%E8%AE%A1/2025/02/05/UNO5/">
+<meta property="og:site_name" content="云间">
+<meta property="og:description" content="UNO游戏在QQ群聊中实现，包括7-0规则的具体实现">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.beyondwj.cc/img/UNO.jpg">
+<meta property="article:published_time" content="2025-02-05T03:00:00.000Z">
+<meta property="article:modified_time" content="2025-02-05T03:00:00.000Z">
+<meta property="article:author" content="BN">
+<meta property="article:tag" content="UNO">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.beyondwj.cc/img/UNO.jpg"><link rel="shortcut icon" href="/img/seele.png"><link rel="canonical" href="https://www.beyondwj.cc/UNO%E8%AE%BE%E8%AE%A1/2025/02/05/UNO5/"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'UNO游戏设计（V）：7-0规则',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-02-05 11:00:00'
+}</script><link rel="stylesheet" href="/css/font.css"><link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head><body><div id="web_bg" style="background-image: url(/img/希儿12.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/seele.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/categories/%E4%BB%A3%E7%A0%81%E5%BA%93"><i class="fa-fw fas fa-code"></i><span> 代码库</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-square-root-variable"></i><span> 建模</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1"><i class="fa-fw fas fa-square-root-variable"></i><span> 数学建模</span></a></li><li><a class="site-page child" href="/categories/%E5%BB%BA%E6%A8%A1%E7%AE%97%E6%B3%95"><i class="fa-fw fas fa-list"></i><span> 建模算法</span></a></li><li><a class="site-page child" href="/categories/%E7%BC%96%E7%A0%81"><i class="fa-fw fas fa-code"></i><span> 编码</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/UNO.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/seele.png" alt="Logo"><span class="site-name">云间</span></a><a class="nav-page-title" href="/"><span class="site-name">UNO游戏设计（V）：7-0规则</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/categories/%E4%BB%A3%E7%A0%81%E5%BA%93"><i class="fa-fw fas fa-code"></i><span> 代码库</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-square-root-variable"></i><span> 建模</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1"><i class="fa-fw fas fa-square-root-variable"></i><span> 数学建模</span></a></li><li><a class="site-page child" href="/categories/%E5%BB%BA%E6%A8%A1%E7%AE%97%E6%B3%95"><i class="fa-fw fas fa-list"></i><span> 建模算法</span></a></li><li><a class="site-page child" href="/categories/%E7%BC%96%E7%A0%81"><i class="fa-fw fas fa-code"></i><span> 编码</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">UNO游戏设计（V）：7-0规则</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-02-05T03:00:00.000Z" title="发表于 2025-02-05 11:00:00">2025-02-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-02-05T03:00:00.000Z" title="更新于 2025-02-05 11:00:00">2025-02-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/UNO%E8%AE%BE%E8%AE%A1/">UNO设计</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><div id="postchat_postcontent"><h1 id="uno游戏设计v7-0规则">UNO游戏设计（V）：7-0规则</h1>
+<h2 id="大洗牌">大洗牌</h2>
+<p>为了测试方便，也为应对突发情况，可以在群聊中发送“大洗牌”让一切重置。不同于直接结束，大洗牌仍然保留加入游戏的玩家信息，牌局也依然存在。</p>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line">reset_game = on_command(<span class="string">"大洗牌"</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@reset_game.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">reset_game_handle</span>(<span class="params">bot: Bot, event: GroupMessageEvent</span>):</span><br><span class="line">    group_id = event.group_id</span><br><span class="line">    game = games.get(group_id)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> game <span class="keyword">or</span> <span class="keyword">not</span> game.game_started:</span><br><span class="line">        <span class="keyword">await</span> bot.send(event, <span class="string">"本群没有正在进行的UNO游戏！"</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">        </span><br><span class="line">    <span class="comment"># 重新初始化牌局</span></span><br><span class="line">    game.hands = {}  <span class="comment"># 清空所有手牌</span></span><br><span class="line"></span><br><span class="line">    game.initialize_deck()  </span><br><span class="line">    game.initialize_card()  <span class="comment"># 重新发牌</span></span><br><span class="line">    game.save()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">await</span> bot.send(event, <span class="string">"已重新洗牌并发牌！手牌将发送至私聊。"</span>)</span><br><span class="line">    <span class="keyword">await</span> send_hand_cards(bot, game)  <span class="comment"># 发送新手牌给所有玩家</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="获取群昵称">获取群昵称</h2>
+<p>之前都是获取的QQ昵称，对于基于群聊的游戏来讲，容易混淆。因此改用群昵称：</p>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line">nickname = event.sender.card <span class="keyword">or</span> event.sender.nickname</span><br></pre></td></tr></tbody></table></figure>
+<p>后续将改进：如果两人群昵称起得相仿，会加入个人昵称或者标号来区分。现在暂时不考虑这个问题。</p>
+<h2 id="规则">7-0规则</h2>
+<figure>
+<img src="./UNO5_imgs/hqdefault.jpg" alt="7-0规则">
+<figcaption aria-hidden="true">7-0规则</figcaption>
+</figure>
+<p>重新叙述一下<strong>7-0规则</strong>：</p>
+<ul>
+<li>当一名玩家打出数字牌<strong>7</strong>时，<strong>必须</strong>选择一名其他玩家，与其交换手牌（此时全场玩家需亮出自己持有手牌的<strong>数量</strong>以供该玩家判断）；</li>
+<li>当一名玩家打出数字牌<strong>0</strong>时，所有玩家将手牌按照当前顺序交给下家。</li>
+</ul>
+<h3 id="异步函数等待机制的实现">异步函数等待机制的实现</h3>
+<p>相比传统的轮询方式（<code>while</code>循环），使用<code>Event</code>对象能够实现更优雅的异步等待机制。我们以一个例子说明：</p>
+<ol type="1">
+<li>用户发送"receive2"命令触发交互</li>
+<li>机器人要求输入0-10之间的数字</li>
+<li>如果输入不符合要求，继续输入，直到结果符合要求为止</li>
+<li>程序返回结果</li>
+</ol>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> nonebot <span class="keyword">import</span> on_command, on_message</span><br><span class="line"><span class="keyword">from</span> nonebot.adapters.onebot.v11 <span class="keyword">import</span> Bot, PrivateMessageEvent, Message</span><br><span class="line"><span class="keyword">from</span> nonebot.params <span class="keyword">import</span> CommandArg</span><br><span class="line"><span class="keyword">from</span> nonebot.typing <span class="keyword">import</span> T_State</span><br><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义命令触发器</span></span><br><span class="line">receive_number_2 = on_command(<span class="string">"receive2"</span>)</span><br><span class="line"></span><br><span class="line">number = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@receive_number_2.handle()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">_</span>(<span class="params">event: PrivateMessageEvent, state: T_State, args: Message = CommandArg(<span class="params"></span>)</span>):</span><br><span class="line">    <span class="keyword">global</span> number</span><br><span class="line">    wait_event=asyncio.Event()</span><br><span class="line">    <span class="comment"># 获取用户的QQ号</span></span><br><span class="line">    user_id = event.user_id</span><br><span class="line">    <span class="comment"># 向用户发送问题</span></span><br><span class="line">    <span class="keyword">await</span> receive_number_2.send(<span class="string">"外部 请输入一个0~10的数字："</span>)</span><br><span class="line">    <span class="comment"># await receive_number.reject(event.get_plaintext())</span></span><br><span class="line">    <span class="comment"># await receive_number.reject(event.get_plaintext())</span></span><br><span class="line">    receive_number = on_message(temp=<span class="literal">True</span>)</span><br><span class="line"><span class="meta">    @receive_number.handle()</span></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_first_receive</span>(<span class="params">bot: Bot, event: PrivateMessageEvent, state: T_State</span>):</span><br><span class="line">        <span class="keyword">global</span> number</span><br><span class="line">        T=event.get_plaintext()</span><br><span class="line">        <span class="keyword">if</span> T.isdigit() <span class="keyword">and</span> <span class="number">0</span> &lt;= <span class="built_in">int</span>(T) &lt;= <span class="number">10</span>:</span><br><span class="line">            <span class="keyword">await</span> receive_number.send(<span class="string">f"内部 你输入的数字是：<span class="subst">{T}</span> 结束"</span>)</span><br><span class="line">            number = <span class="built_in">int</span>(T)</span><br><span class="line">            wait_event.<span class="built_in">set</span>()</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">await</span> receive_number.reject(<span class="string">f"内部 <span class="subst">{T}</span> 继续输入"</span>)</span><br><span class="line">    <span class="keyword">await</span> wait_event.wait()</span><br><span class="line">    <span class="comment"># while not allow:</span></span><br><span class="line">    <span class="comment">#     await asyncio.sleep(0.2)</span></span><br><span class="line">    <span class="keyword">await</span> receive_number_2.send(<span class="string">f"外部 你输入的数字是：<span class="subst">{number}</span>"</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>这段代码被注释的部分是轮询机制，即每隔一个<strong>短时间</strong>检验变量是否符合要求，如果符合则继续外部进程。但是这样做比较耗费资源，因此预先定义一个<code>Event</code>，再通过<code>set()</code>和<code>wait()</code>实现等待机制，只有当内部任务完成时外部任务才可继续。</p>
+<ol type="1">
+<li><strong>触发阶段</strong></li>
+</ol>
+<ul>
+<li>用户发送<code>receive2</code>命令</li>
+<li>机器人创建异步等待事件</li>
+<li>发送提示消息要求输入数字</li>
+</ul>
+<ol start="2" type="1">
+<li><strong>输入处理阶段</strong></li>
+</ol>
+<ul>
+<li>创建临时消息处理器监听用户输入</li>
+<li>检查输入是否为0-10之间的数字</li>
+<li>若输入有效：
+<ul>
+<li>保存数字</li>
+<li>发送确认消息</li>
+<li>设置等待事件完成</li>
+</ul></li>
+<li>若输入无效：
+<ul>
+<li>要求重新输入</li>
+</ul></li>
+</ul>
+<ol start="3" type="1">
+<li><strong>完成阶段</strong></li>
+</ol>
+<ul>
+<li>等待事件完成后</li>
+<li>发送最终确认消息，显示用户输入的数字</li>
+</ul>
+<p>下图展现了这个测试小程序的效果：</p>
+<figure>
+<img src="./UNO5_imgs/image-20250204224506846.png" alt="等待的异步函数">
+<figcaption aria-hidden="true">等待的异步函数</figcaption>
+</figure>
+<p>将这个原理运用到7-0规则的实现上，可以将相对复杂的询问流程简化。同时，实现了这一点后，后续的变色牌和最为棘手的+4牌的逻辑也可轻松解决。</p>
+<p>7-0规则中的0规则相对简单，只需要每家交换给顺序的下家即可，不需要有询问的流程，但却能提供一个很好的框架。因此先从0的规则开始：</p>
+<h3 id="的规则">0的规则</h3>
+<p>0的规则表述为：当一名玩家打出数字牌<strong>0</strong>时，所有玩家将手牌按照当前顺序交给下家。</p>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment"># 0 牌</span></span><br><span class="line"><span class="keyword">if</span> card[<span class="number">1</span>:] == <span class="string">'0'</span>:</span><br><span class="line">    old_hands = [copy.deepcopy(game.hands[i]) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(game.playerids))]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 出牌前给每位玩家发送私信，告知手牌交换信息</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(game.playerids)):</span><br><span class="line">        next_index = (i + game.direction) % <span class="built_in">len</span>(game.playerids)</span><br><span class="line">        prev_index = (i - game.direction) % <span class="built_in">len</span>(game.playerids)</span><br><span class="line">        <span class="keyword">await</span> bot.send_private_msg(</span><br><span class="line">        user_id=game.playerids[i],</span><br><span class="line">        message=<span class="string">f"你(<span class="subst">{<span class="built_in">len</span>(old_hands[i])}</span>)给了<span class="subst">{game.players[next_index]}</span>(<span class="subst">{<span class="built_in">len</span>(old_hands[next_index])}</span>)手牌，你拿到了<span class="subst">{game.players[prev_index]}</span>(<span class="subst">{<span class="built_in">len</span>(old_hands[prev_index])}</span>)的手牌"</span></span><br><span class="line">        )</span><br><span class="line">        time.sleep(<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(game.playerids)):</span><br><span class="line">        next_index = (i + game.direction) % <span class="built_in">len</span>(game.playerids)</span><br><span class="line">        game.hands[next_index] = old_hands[i]</span><br><span class="line">    <span class="keyword">await</span> bot.send_group_msg(group_id=group_id, message=<span class="string">"所有玩家的手牌已按照当前顺序交给下家！"</span>)</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br><span class="line">    <span class="keyword">await</span> send_hand_cards(bot, game) <span class="comment"># 发送手牌信息</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<h3 id="的规则-1">7的规则</h3>
+<p>7的规则表述为：当一名玩家打出数字牌<strong>7</strong>时，<strong>必须</strong>选择一名其他玩家，与其交换手牌（此时全场玩家需亮出自己持有手牌的<strong>数量</strong>以供该玩家判断）。其中全场持有手牌的数量可以借由之前的房间信息中的一项给出：</p>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line">players_hands = <span class="string">', '</span>.join([<span class="string">f"[<span class="subst">{i}</span>]<span class="subst">{player}</span>(<span class="subst">{<span class="built_in">len</span>(game.hands[i])}</span>)"</span> <span class="keyword">for</span> i, player <span class="keyword">in</span> <span class="built_in">enumerate</span>(game.players)]) <span class="comment"># 此处可以枚举 按顺序</span></span><br></pre></td></tr></tbody></table></figure>
+<p>因此问题主要聚焦于选择玩家的互动过程。</p>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line">last_index = game.playerids.index(user_id)</span><br><span class="line"></span><br><span class="line"><span class="keyword">elif</span> card[<span class="number">1</span>:] == <span class="string">'7'</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(game.playerids) == <span class="number">2</span>:</span><br><span class="line">        other_player_index = <span class="number">1</span> - last_index</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> bot.send_private_msg(user_id=game.playerids[last_index], message=<span class="string">f"你(<span class="subst">{<span class="built_in">len</span>(game.hands[last_index])}</span>) 与 <span class="subst">{game.players[other_player_index]}</span>(<span class="subst">{<span class="built_in">len</span>(game.hands[other_player_index])}</span>) 交换了手牌！"</span>) <span class="comment"># 发送私聊给当前玩家</span></span><br><span class="line">        <span class="keyword">await</span> bot.send_private_msg(user_id=game.playerids[other_player_index], message=<span class="string">f"你(<span class="subst">{<span class="built_in">len</span>(game.hands[other_player_index])}</span>) 被 <span class="subst">{nickname}</span>(<span class="subst">{<span class="built_in">len</span>(game.hands[last_index])}</span>) 交换了手牌！"</span>) <span class="comment"># 发送私聊给被交换的玩家</span></span><br><span class="line"></span><br><span class="line">        game.hands[last_index], game.hands[other_player_index] = copy.deepcopy(game.hands[other_player_index]), copy.deepcopy(game.hands[last_index])</span><br><span class="line">        <span class="keyword">await</span> bot.send_group_msg(</span><br><span class="line">        group_id=group_id, </span><br><span class="line">        message=<span class="string">f"仅有两位玩家，<span class="subst">{nickname}</span>(<span class="subst">{<span class="built_in">len</span>(game.hands[last_index])}</span>) 与 <span class="subst">{game.players[other_player_index]}</span>(<span class="subst">{<span class="built_in">len</span>(game.hands[other_player_index])}</span>) 交换了手牌！"</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">await</span> send_hand_cards(bot, game)</span><br><span class="line">        time.sleep(<span class="number">0.2</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># 玩家主动选择交换的对象</span></span><br><span class="line">        <span class="keyword">await</span> bot.send_private_msg(</span><br><span class="line">        user_id=game.playerids[last_index],</span><br><span class="line">        message=<span class="string">f"请输入要交换手牌的玩家序号（不可选择自己）\n<span class="subst">{players_hands}</span>"</span></span><br><span class="line">        )</span><br><span class="line">        wait_event=asyncio.Event()</span><br><span class="line">        <span class="keyword">global</span> chosen_player_index</span><br><span class="line">        chosen_player_index = -<span class="number">1</span></span><br><span class="line">        receive_number = on_message(temp=<span class="literal">True</span>)</span><br><span class="line"><span class="meta">        @receive_number.handle()</span></span><br><span class="line">        <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">_</span>(<span class="params">bot: Bot, event: PrivateMessageEvent, state: T_State, game=game</span>):</span><br><span class="line">            T=event.get_plaintext()</span><br><span class="line">            <span class="keyword">if</span> T.isdigit() <span class="keyword">and</span> <span class="number">0</span> &lt;= <span class="built_in">int</span>(T) &lt; <span class="built_in">len</span>(game.playerids):</span><br><span class="line">                <span class="keyword">global</span> chosen_player_index</span><br><span class="line">                chosen_player_index = <span class="built_in">int</span>(T)</span><br><span class="line">                <span class="keyword">if</span> <span class="built_in">int</span>(T) == last_index:</span><br><span class="line">                    <span class="keyword">await</span> receive_number.reject(<span class="string">"不能选择自己！"</span>)</span><br><span class="line">                <span class="comment"># await receive_number.send(f"你选中的玩家序号是：{T}")</span></span><br><span class="line">                wait_event.<span class="built_in">set</span>() <span class="comment"># 释放等待</span></span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            <span class="keyword">await</span> receive_number.reject(<span class="string">f"请输入正确的玩家序号！你输入的是：<span class="subst">{T}</span>"</span>)</span><br><span class="line">        <span class="keyword">await</span> wait_event.wait() <span class="comment"># 等待</span></span><br><span class="line">        other_player_index = chosen_player_index</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> bot.send_private_msg(user_id=game.playerids[last_index], message=<span class="string">f"你(<span class="subst">{<span class="built_in">len</span>(game.hands[last_index])}</span>) 与 <span class="subst">{game.players[other_player_index]}</span>(<span class="subst">{<span class="built_in">len</span>(game.hands[other_player_index])}</span>) 交换了手牌！"</span>) <span class="comment"># 发送私聊给当前玩家</span></span><br><span class="line">        <span class="keyword">await</span> bot.send_private_msg(user_id=game.playerids[other_player_index], message=<span class="string">f"你(<span class="subst">{<span class="built_in">len</span>(game.hands[other_player_index])}</span>) 被 <span class="subst">{nickname}</span>(<span class="subst">{<span class="built_in">len</span>(game.hands[last_index])}</span>) 交换了手牌！"</span>) <span class="comment"># 发送私聊给被交换的玩家</span></span><br><span class="line"></span><br><span class="line">        game.hands[last_index], game.hands[other_player_index] = copy.deepcopy(game.hands[other_player_index]), copy.deepcopy(game.hands[last_index]) <span class="comment"># 交换手牌</span></span><br><span class="line">        <span class="keyword">await</span> bot.send_group_msg(group_id=group_id, message=<span class="string">f"<span class="subst">{nickname}</span>(<span class="subst">{<span class="built_in">len</span>(game.hands[last_index])}</span>) 与 <span class="subst">{game.players[other_player_index]}</span>(<span class="subst">{<span class="built_in">len</span>(game.hands[other_player_index])}</span>) 交换了手牌！"</span>)</span><br><span class="line">        time.sleep(<span class="number">0.2</span>)</span><br><span class="line">        <span class="keyword">await</span> send_hand_cards(bot, game, user_id=game.playerids[last_index]) <span class="comment"># 发送当前玩家的手牌</span></span><br><span class="line">        time.sleep(<span class="number">0.2</span>)</span><br><span class="line">        <span class="keyword">await</span> send_hand_cards(bot, game, user_id=game.playerids[other_player_index]) <span class="comment"># 发送交换对象的手牌</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="测试">测试</h2>
+<figure>
+<img src="./UNO5_imgs/image-20250205103533791.png" alt="出0牌之后">
+<figcaption aria-hidden="true">出0牌之后</figcaption>
+</figure>
+<figure>
+<img src="./UNO5_imgs/image-20250205103939180.png" alt="出7牌之后">
+<figcaption aria-hidden="true">出7牌之后</figcaption>
+</figure>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="Beyond N. W. J.">BN</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.beyondwj.cc/UNO%E8%AE%BE%E8%AE%A1/2025/02/05/UNO5/">https://www.beyondwj.cc/UNO%E8%AE%BE%E8%AE%A1/2025/02/05/UNO5/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.beyondwj.cc" target="_blank">云间</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/UNO/">UNO</a></div><div class="post-share"><div class="social-share" data-image="/img/UNO.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer=""></script></div></div><nav class="pagination-post" id="pagination"><a class="prev-post pull-full" href="/UNO%E8%AE%BE%E8%AE%A1/2025/02/04/UNO4/" title="UNO游戏设计（IV）：增加功能：房间信息/喊话/部分抢牌"><img class="cover" src="/img/UNO.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">UNO游戏设计（IV）：增加功能：房间信息/喊话/部分抢牌</div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a href="/UNO%E8%AE%BE%E8%AE%A1/2025/02/02/UNO1/" title="UNO游戏设计（I）：基于Nonebot实现/游戏规则"><img class="cover" src="/img/UNO.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-02</div><div class="title">UNO游戏设计（I）：基于Nonebot实现/游戏规则</div></div></a><a href="/UNO%E8%AE%BE%E8%AE%A1/2025/02/03/UNO3/" title="UNO游戏设计（III）：优化/功能牌实现"><img class="cover" src="/img/UNO.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-03</div><div class="title">UNO游戏设计（III）：优化/功能牌实现</div></div></a><a href="/UNO%E8%AE%BE%E8%AE%A1/2025/02/02/UNO2/" title="UNO游戏设计（II）：实现基本的数字牌功能"><img class="cover" src="/img/UNO.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-02</div><div class="title">UNO游戏设计（II）：实现基本的数字牌功能</div></div></a><a href="/UNO%E8%AE%BE%E8%AE%A1/2025/02/04/UNO4/" title="UNO游戏设计（IV）：增加功能：房间信息/喊话/部分抢牌"><img class="cover" src="/img/UNO.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-04</div><div class="title">UNO游戏设计（IV）：增加功能：房间信息/喊话/部分抢牌</div></div></a></div></div><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info is-center"><div class="avatar-img"><img src="/img/seele.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info-name">BN</div><div class="author-info-description">云间的希儿芙乐艾版</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://space.bilibili.com/486240087?spm_id_from=333.1007.0.0"><i class="fab fa-bilibili"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/BeyondWillJ" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://www.beyondwj.cc/%E9%9A%8F%E4%BE%BF%E8%AF%B4%E8%AF%B4/2024/07/23/my_first_/" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是云间的希儿芙乐艾版</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#uno%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1v7-0%E8%A7%84%E5%88%99"><span class="toc-number">1.</span> <span class="toc-text">UNO游戏设计（V）：7-0规则</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%A7%E6%B4%97%E7%89%8C"><span class="toc-number">1.1.</span> <span class="toc-text">大洗牌</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E7%BE%A4%E6%98%B5%E7%A7%B0"><span class="toc-number">1.2.</span> <span class="toc-text">获取群昵称</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E5%88%99"><span class="toc-number">1.3.</span> <span class="toc-text">7-0规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E5%87%BD%E6%95%B0%E7%AD%89%E5%BE%85%E6%9C%BA%E5%88%B6%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.1.</span> <span class="toc-text">异步函数等待机制的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9A%84%E8%A7%84%E5%88%99"><span class="toc-number">1.3.2.</span> <span class="toc-text">0的规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9A%84%E8%A7%84%E5%88%99-1"><span class="toc-number">1.3.3.</span> <span class="toc-text">7的规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-number">1.4.</span> <span class="toc-text">测试</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/UNO%E8%AE%BE%E8%AE%A1/2025/02/05/UNO5/" title="UNO游戏设计（V）：7-0规则"><img src="/img/UNO.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="UNO游戏设计（V）：7-0规则"></a><div class="content"><a class="title" href="/UNO%E8%AE%BE%E8%AE%A1/2025/02/05/UNO5/" title="UNO游戏设计（V）：7-0规则">UNO游戏设计（V）：7-0规则</a><time datetime="2025-02-05T03:00:00.000Z" title="发表于 2025-02-05 11:00:00">2025-02-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/UNO%E8%AE%BE%E8%AE%A1/2025/02/04/UNO4/" title="UNO游戏设计（IV）：增加功能：房间信息/喊话/部分抢牌"><img src="/img/UNO.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="UNO游戏设计（IV）：增加功能：房间信息/喊话/部分抢牌"></a><div class="content"><a class="title" href="/UNO%E8%AE%BE%E8%AE%A1/2025/02/04/UNO4/" title="UNO游戏设计（IV）：增加功能：房间信息/喊话/部分抢牌">UNO游戏设计（IV）：增加功能：房间信息/喊话/部分抢牌</a><time datetime="2025-02-04T04:00:00.000Z" title="发表于 2025-02-04 12:00:00">2025-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/UNO%E8%AE%BE%E8%AE%A1/2025/02/03/UNO3/" title="UNO游戏设计（III）：优化/功能牌实现"><img src="/img/UNO.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="UNO游戏设计（III）：优化/功能牌实现"></a><div class="content"><a class="title" href="/UNO%E8%AE%BE%E8%AE%A1/2025/02/03/UNO3/" title="UNO游戏设计（III）：优化/功能牌实现">UNO游戏设计（III）：优化/功能牌实现</a><time datetime="2025-02-03T05:00:00.000Z" title="发表于 2025-02-03 13:00:00">2025-02-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/UNO%E8%AE%BE%E8%AE%A1/2025/02/02/UNO2/" title="UNO游戏设计（II）：实现基本的数字牌功能"><img src="/img/UNO.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="UNO游戏设计（II）：实现基本的数字牌功能"></a><div class="content"><a class="title" href="/UNO%E8%AE%BE%E8%AE%A1/2025/02/02/UNO2/" title="UNO游戏设计（II）：实现基本的数字牌功能">UNO游戏设计（II）：实现基本的数字牌功能</a><time datetime="2025-02-02T15:39:00.000Z" title="发表于 2025-02-02 23:39:00">2025-02-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/UNO%E8%AE%BE%E8%AE%A1/2025/02/02/UNO1/" title="UNO游戏设计（I）：基于Nonebot实现/游戏规则"><img src="/img/UNO.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="UNO游戏设计（I）：基于Nonebot实现/游戏规则"></a><div class="content"><a class="title" href="/UNO%E8%AE%BE%E8%AE%A1/2025/02/02/UNO1/" title="UNO游戏设计（I）：基于Nonebot实现/游戏规则">UNO游戏设计（I）：基于Nonebot实现/游戏规则</a><time datetime="2025-02-02T05:20:00.000Z" title="发表于 2025-02-02 13:20:00">2025-02-02</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/UNO.jpg);"><div id="footer-wrap"><div class="copyright">©2024.07 - 2025 By BN</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">此后如竟没有炬火，我便是唯一的光。<p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a> &nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vercel-brightgreen?style=flat&amp;logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Coding-0cedbe?style=flat&amp;logo=Codio" title="本站采用双线部署，联通线路托管于Coding"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button><button id="go-down" type="button" title="直达底部" onclick="scrollToBottom()"><i class="fas fa-arrow-down"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://beyondwj.netlify.app/.netlify/functions/twikoo',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://beyondwj.netlify.app/.netlify/functions/twikoo',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else btf.getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/js/custom.js"></script><script async="" data-pjax="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --> <script data-pjax="">if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://www.beyondwj.cc/categories/MATLAB/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">⚠️ MATLAB基础 (4)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.beyondwj.cc/categories/建模算法/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🔢 数学建模算法 (1)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.beyondwj.cc/categories/编码/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">✅ 编码 (2)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.beyondwj.cc/categories/数学建模/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📅 数学建模计划安排 (3)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://www.beyondwj.cc/categories/UNO设计/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🎈 UNO (5)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item" style="visibility: hidden"></div><a class="magnet_link_more"  href="https://www.beyondwj.cc/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(33.333333333333336% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax="">
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="数学建模/2024/11/03/建模算法大纲/" alt=""><img width="48" height="48" src="/img/seele_bigback.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-03</span><a class="blog-slider__title" href="数学建模/2024/11/03/建模算法大纲/" alt="">建模算法大纲</a><div class="blog-slider__text">关于数学建模的算法与工具</div><a class="blog-slider__button" href="数学建模/2024/11/03/建模算法大纲/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="编码/2024/11/19/矩阵运算/" alt=""><img width="48" height="48" src="/img/MATLABbig.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-11-19</span><a class="blog-slider__title" href="编码/2024/11/19/矩阵运算/" alt="">矩阵运算</a><div class="blog-slider__text">MATLAB&amp;python矩阵运算的相关用法</div><a class="blog-slider__button" href="编码/2024/11/19/矩阵运算/" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer="" src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer="" data-pjax="" src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end -->
+    <link rel="stylesheet" href="https://ai.tianli0.top/static/public/postChatUser_summary.min.css">
+    <script>
+        let tianliGPT_key = 'MmSOdciJVsi';
+        let tianliGPT_postSelector = '#article-container';
+        let tianliGPT_Title = '云间の文章摘要';
+        let tianliGPT_postURL = '/^https?://(.+?)/[^/]+/[0-9]{4}/[0-9]{2}/[0-9]{2}/';
+        let tianliGPT_blacklist = '/img/blacklist.json';
+        let tianliGPT_wordLimit = '1000';
+        let tianliGPT_typingAnimate = true;
+        let tianliGPT_theme = 'default';
+        var postChatConfig = {
+          backgroundColor: "#3e86f6",
+          bottom: "16px",
+          left: "16px",
+          fill: "#FFFFFF",
+          width: "44px",
+          frameWidth: "375px",
+          frameHeight: "600px",
+          defaultInput: true,
+          upLoadWeb: true,
+          showInviteLink: true,
+          userTitle: "PostChat",
+          userDesc: "如果你对网站的内容有任何疑问，可以来问我哦～",
+          addButton: true,
+          beginningText: "这篇文章介绍了",
+          userIcon: "https://ai.tianli0.top/static/img/PostChat.webp",
+          userMode: "magic",
+          defaultChatQuestions: ["你好","你是谁"],
+          defaultSearchQuestions: ["视频压缩","设计"]
+        };
+    </script>
+    <script data-postchat_key="MmSOdciJVsi" src="https://ai.tianli0.top/static/public/tianli_gpt.min.js"></script>
+  </body></html>
